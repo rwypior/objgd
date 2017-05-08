@@ -40,5 +40,5 @@ $text2->setCoord(new \RWypior\Objgd\Unit\Coord('50%', 110));
 
 $img->drawElement($text2);
 
-header('Content-Type: image/jpeg');
-$img->output();
+header('Content-Type: image/png');
+$img->output(NULL,\RWypior\Objgd\Image::TYPE_JPEG);

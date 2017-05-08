@@ -173,7 +173,7 @@ class Image
                 imagejpeg($this->handle, $path, $quality * 100.0);
                 break;
             case self::TYPE_PNG:
-                imagepng($this->handle, $quality * 9.0);
+                imagepng($this->handle, $path, $quality * 9.0);
                 break;
         }
     }
