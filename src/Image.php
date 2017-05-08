@@ -12,6 +12,8 @@ class Image
     const TYPE_PNG = 'png';
     const TYPE_BMP = 'bmp';
 
+    protected $saveWithAlpha = false;
+
     protected $handle;
     protected $currentColor = NULL;
 
@@ -25,9 +27,12 @@ class Image
         imagedestroy($this->handle);
     }
 
-    public function fill(Color $color)
+    public function fill(Color $color, Coord $coord = NULL)
     {
-        imagefill($this->getGDHandle(), 0, 0, $color->getIntValue());
+        if (!$coord)
+            $coord = new Coord(0, 0);
+
+        imagefill($this->getGDHandle(), $coord->x, $coord->y, $color->getIntValue());
     }
 
     /**
@@ -60,6 +65,13 @@ class Image
             throw new \InvalidArgumentException("Could not find file \"$path\"");
 
         return self::createFromFile(file_get_contents($path));
+    }
+
+    public function enableAlpha($enable = true)
+    {
+        $this->saveWithAlpha = $enable;
+        imagesavealpha($this->handle, $enable);
+        imagealphablending($this->handle, $enable);
     }
 
     /**
@@ -167,6 +179,9 @@ class Image
      */
     public function output(string $path = NULL, $type = self::TYPE_JPEG, float $quality = 1.0)
     {
+        if ($this->saveWithAlpha)
+            imagealphablending($this->handle, false);
+
         switch($type) {
             case self::TYPE_JPEG:
             case self::TYPE_JPG:
@@ -176,5 +191,7 @@ class Image
                 imagepng($this->handle, $path, $quality * 9.0);
                 break;
         }
+
+        imagealphablending($this->handle, true);
     }
 }

@@ -232,7 +232,8 @@ class Color
             'white'=>'FFFFFF',
             'whitesmoke'=>'F5F5F5',
             'yellow'=>'FFFF00',
-            'yellowgreen'=>'9ACD32'
+            'yellowgreen'=>'9ACD32',
+            'transparent' => '7F000000'
         ];
         return $colors;
     }
