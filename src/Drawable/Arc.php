@@ -25,11 +25,18 @@ class Arc implements DrawableInterface
     /** @var Color $color */
     protected $color;
 
+    /** @var Color $fillColor */
+    protected $fillColor;
+
+    protected $fillStyle;
+
     /** @var LineStyle $style */
     protected $style = NULL;
 
     public function __construct(Coord $coord = NULL, Coord $size = NULL, Coord $angles = NULL)
     {
+        $this->fillStyle = IMG_ARC_PIE;
+
         if ($coord == NULL)
             $coord = new Coord();
 
@@ -62,7 +69,11 @@ class Arc implements DrawableInterface
 
         imagesetthickness($image->getGDHandle(), $this->thickness);
 
-        imagearc($image->getGDHandle(), $coord->x, $coord->y, $size->x, $size->y, $this->angles->x, $this->angles->y, $color);
+        if ($this->color)
+            imagearc($image->getGDHandle(), $coord->x, $coord->y, $size->x, $size->y, $this->angles->x, $this->angles->y, $color);
+
+        if ($this->fillColor)
+            imagefilledarc($image->getGDHandle(), $coord->x, $coord->y, $size->x, $size->y, $this->angles->x, $this->angles->y, $color, $this->fillStyle);
     }
 
     /**
@@ -152,6 +163,42 @@ class Arc implements DrawableInterface
     public function setColor(Color $color): Arc
     {
         $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * @return Color
+     */
+    public function getFillColor(): Color
+    {
+        return $this->fillColor;
+    }
+
+    /**
+     * @param Color $fillColor
+     * @return Arc
+     */
+    public function setFillColor(Color $fillColor): Arc
+    {
+        $this->fillColor = $fillColor;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFillStyle(): int
+    {
+        return $this->fillStyle;
+    }
+
+    /**
+     * @param int $fillStyle
+     * @return Arc
+     */
+    public function setFillStyle(int $fillStyle): Arc
+    {
+        $this->fillStyle = $fillStyle;
         return $this;
     }
 

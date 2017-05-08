@@ -62,4 +62,24 @@ class Coord
         $y = $this->y - $dest->y;
         return sqrt($x * $x + $y * $y);
     }
+
+    /**
+     * Get value of subtraction
+     * @param Coord $coord
+     * @return Coord
+     */
+    public function subtract(Coord $coord)
+    {
+        return new Coord($this->x - $coord->x, $this->y - $coord->y);
+    }
+
+    /**
+     * Get value of addition
+     * @param Coord $coord
+     * @return Coord
+     */
+    public function add(Coord $coord)
+    {
+        return new Coord($this->x + $coord->x, $this->y + $coord->y);
+    }
 }
