@@ -1,0 +1,16 @@
+{
+    "name": "rwypior/objgd",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Robert Wypiór",
+            "email": "robwypior@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "RWypior\\Objgd\\": "src"
+        }
+    }
+}
