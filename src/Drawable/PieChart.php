@@ -32,6 +32,17 @@ class PieChart implements DrawableInterface
     /** @var float $borderThickness */
     protected $borderThickness = 1.5;
 
+    /** @var Color $textColor */
+    protected $textColor;
+
+    /** @var float label distance ratio */
+    protected $labelDistance = 0.7;
+
+    public function __construct()
+    {
+        $this->textColor = Color::fromName('white');
+    }
+
     /**
      * @param Image $image
      * @return null
@@ -71,8 +82,8 @@ class PieChart implements DrawableInterface
             $midAngle = ($prevAngle + $angle) * 0.5;
 
             $pointText = new \RWypior\Objgd\Unit\Coord(
-                $size->x * 0.7 * cos(deg2rad($midAngle)) + $coord->x,
-                $size->y * 0.7 * sin(deg2rad($midAngle)) + $coord->y
+                $size->x * $this->labelDistance * cos(deg2rad($midAngle)) + $coord->x,
+                $size->y * $this->labelDistance * sin(deg2rad($midAngle)) + $coord->y
             );
 
             $percentReadable = round($percent * 100);
@@ -84,6 +95,7 @@ class PieChart implements DrawableInterface
             $text->setCoord($pointText);
             $text->setSize(15);
             $text->setAlign(\RWypior\Objgd\Unit\Align::center());
+            $text->setColor($this->textColor);
 
             $image->drawElement($arc1);
             $image->drawElement($line1);
@@ -143,6 +155,42 @@ class PieChart implements DrawableInterface
         {
             $entry->setPercent($entry->getAmount() / $sum);
         }
+    }
+
+    /**
+     * @return Color
+     */
+    public function getTextColor(): Color
+    {
+        return $this->textColor;
+    }
+
+    /**
+     * @param Color $textColor
+     * @return PieChart
+     */
+    public function setTextColor(Color $textColor): PieChart
+    {
+        $this->textColor = $textColor;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLabelDistance(): float
+    {
+        return $this->labelDistance;
+    }
+
+    /**
+     * @param float $labelDistance
+     * @return PieChart
+     */
+    public function setLabelDistance(float $labelDistance): PieChart
+    {
+        $this->labelDistance = $labelDistance;
+        return $this;
     }
 
     /**
