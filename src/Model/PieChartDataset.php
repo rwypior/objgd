@@ -14,7 +14,7 @@ class PieChartDataset
     public function __construct($name, float $amount, Color $color)
     {
         $this->name = $name;
-        $this->amount = $amount;
+        $this->amount = $amount ?: 0.0;
         $this->color = $color;
     }
 

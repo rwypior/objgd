@@ -70,6 +70,8 @@ class PieChart implements DrawableInterface
 
         $labels = [];
 
+        $arcOffset = count($this->data) > 1 ? $this->arcOffset : 0;
+
         foreach($this->data as $name => $data)
         {
             $color = $data->getColor();
@@ -78,7 +80,7 @@ class PieChart implements DrawableInterface
 
             $arc1 = new \RWypior\Objgd\Drawable\Arc();
             $arc1->setCoord($this->coord);
-            $arc1->setAngles(new \RWypior\Objgd\Unit\Coord($prevAngle, $angle + $this->arcOffset));
+            $arc1->setAngles(new \RWypior\Objgd\Unit\Coord($prevAngle, $angle + $arcOffset));
             $arc1->setSize($size);
             $arc1->setColor($color);
             $arc1->setFillColor($color);
