@@ -39,7 +39,10 @@ class PieChart implements DrawableInterface
     protected $labelDistance = 0.7;
 
     /** @var Callable $roundFunction used to round displayed percentage */
-    public $roundFunction;
+    protected $roundFunction;
+
+    /** @var int $arcOffset how much to offset arcs' second angle */
+    protected $arcOffset = 2;
 
     public function __construct()
     {
@@ -174,6 +177,42 @@ class PieChart implements DrawableInterface
         }
     }
 
+    /**
+     * @return Callable
+     */
+    public function getRoundFunction(): Callable
+    {
+        return $this->roundFunction;
+    }
+
+    /**
+     * @param Callable $roundFunction
+     * @return PieChart
+     */
+    public function setRoundFunction(Callable $roundFunction): PieChart
+    {
+        $this->roundFunction = $roundFunction;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getArcOffset(): int
+    {
+        return $this->arcOffset;
+    }
+
+    /**
+     * @param int $arcOffset
+     * @return PieChart
+     */
+    public function setArcOffset(int $arcOffset): PieChart
+    {
+        $this->arcOffset = $arcOffset;
+        return $this;
+    }
+    
     /**
      * @return Color
      */
