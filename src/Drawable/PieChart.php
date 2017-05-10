@@ -78,7 +78,7 @@ class PieChart implements DrawableInterface
 
             $arc1 = new \RWypior\Objgd\Drawable\Arc();
             $arc1->setCoord($this->coord);
-            $arc1->setAngles(new \RWypior\Objgd\Unit\Coord($prevAngle, $angle + 1));
+            $arc1->setAngles(new \RWypior\Objgd\Unit\Coord($prevAngle, $angle + $this->arcOffset));
             $arc1->setSize($size);
             $arc1->setColor($color);
             $arc1->setFillColor($color);
@@ -212,7 +212,7 @@ class PieChart implements DrawableInterface
         $this->arcOffset = $arcOffset;
         return $this;
     }
-    
+
     /**
      * @return Color
      */
