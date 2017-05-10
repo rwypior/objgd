@@ -69,6 +69,7 @@ class PieChart implements DrawableInterface
         $prevAngle = 0;
 
         $labels = [];
+        $lines = [];
 
         $arcOffset = count($this->data) > 1 ? $this->arcOffset : 0;
 
@@ -94,6 +95,8 @@ class PieChart implements DrawableInterface
             $line1->setCoordA($coord);
             $line1->setCoordB($pointCircumference);
             $line1->setColor($color);
+            $line1->setThickness(10);
+            $lines[] = $line1;
 
             $midAngle = ($prevAngle + $angle) * 0.5;
 
@@ -116,11 +119,10 @@ class PieChart implements DrawableInterface
             $labels[] = $text;
 
             $image->drawElement($arc1);
-            $image->drawElement($line1);
 
             $prevAngle = $angle;
         }
-
+        
         if ($this->borderColor)
             $this->drawBorder($image, $coord, $size);
 

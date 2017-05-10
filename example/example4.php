@@ -13,7 +13,7 @@ $chart->setSize(new \RWypior\Objgd\Unit\Coord(300, 300));
 $chart->setCoord(new \RWypior\Objgd\Unit\Coord('50%', '50%'));
 $chart->setFont($font);
 $chart->setDrawNames(true);
-$chart->setBorderColor(\RWypior\Objgd\Unit\Color::fromName('black'));
+$chart->setBorderColor(\RWypior\Objgd\Unit\Color::fromRGB(0, 0, 0, 0.5));
 $chart->setBorderThickness(1.5);
 $chart->setLabelDistance(0.7);
 $chart->setTextColor(\RWypior\Objgd\Unit\Color::fromName('white'));
@@ -26,6 +26,7 @@ $chart->addData(new \RWypior\Objgd\Model\PieChartDataset('Another entry d', 100,
 $chart->addData(new \RWypior\Objgd\Model\PieChartDataset('Another entry e', 100, \RWypior\Objgd\Unit\Color::fromHex('9b972e')));
 $chart->addData(new \RWypior\Objgd\Model\PieChartDataset('Another entry f', 100, \RWypior\Objgd\Unit\Color::fromHex('417b26')));
 $chart->addData(new \RWypior\Objgd\Model\PieChartDataset('Another entry g', 100, \RWypior\Objgd\Unit\Color::fromHex('9d2b22')));
+imageantialias($img->getGDHandle(), true);
 
 $img->drawElement($chart);
 
