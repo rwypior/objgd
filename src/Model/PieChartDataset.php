@@ -21,7 +21,7 @@ class PieChartDataset
     /**
      * @return mixed
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -30,7 +30,7 @@ class PieChartDataset
      * @param mixed $name
      * @return PieChartDataset
      */
-    public function setName($name)
+    public function setName(string $name): PieChartDataset
     {
         $this->name = $name;
         return $this;
@@ -55,9 +55,9 @@ class PieChartDataset
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getPercent()
+    public function getPercent(): float
     {
         return $this->percent;
     }
@@ -66,7 +66,7 @@ class PieChartDataset
      * @param mixed $percent
      * @return PieChartDataset
      */
-    public function setPercent($percent)
+    public function setPercent(float $percent): PieChartDataset
     {
         $this->percent = $percent;
         return $this;

@@ -38,9 +38,18 @@ class PieChart implements DrawableInterface
     /** @var float label distance ratio */
     protected $labelDistance = 0.7;
 
+    /** @var Callable $roundFunction used to round displayed percentage */
+    public $roundFunction;
+
     public function __construct()
     {
+        $this->roundFunction = [$this, 'roundPercentage'];
         $this->textColor = Color::fromName('white');
+    }
+
+    public function roundPercentage($percentage, $allData)
+    {
+        return round($percentage * 100, 1);
     }
 
     /**
@@ -56,6 +65,8 @@ class PieChart implements DrawableInterface
 
         $prevAngle = 0;
 
+        $labels = [];
+
         foreach($this->data as $name => $data)
         {
             $color = $data->getColor();
@@ -64,7 +75,7 @@ class PieChart implements DrawableInterface
 
             $arc1 = new \RWypior\Objgd\Drawable\Arc();
             $arc1->setCoord($this->coord);
-            $arc1->setAngles(new \RWypior\Objgd\Unit\Coord($prevAngle, $angle));
+            $arc1->setAngles(new \RWypior\Objgd\Unit\Coord($prevAngle, $angle + 1));
             $arc1->setSize($size);
             $arc1->setColor($color);
             $arc1->setFillColor($color);
@@ -86,7 +97,8 @@ class PieChart implements DrawableInterface
                 $size->y * $this->labelDistance * sin(deg2rad($midAngle)) + $coord->y
             );
 
-            $percentReadable = round($percent * 100);
+            $rf = $this->roundFunction;
+            $percentReadable = $rf($percent, $this->data);
             $label = $percentReadable . '%';
             if ($this->drawNames)
                 $label .= "\n{$data->getName()}";
@@ -96,16 +108,19 @@ class PieChart implements DrawableInterface
             $text->setSize(15);
             $text->setAlign(\RWypior\Objgd\Unit\Align::center());
             $text->setColor($this->textColor);
+            $labels[] = $text;
 
             $image->drawElement($arc1);
             $image->drawElement($line1);
-            $image->drawElement($text);
 
             $prevAngle = $angle;
         }
 
         if ($this->borderColor)
             $this->drawBorder($image, $coord, $size);
+
+        foreach($labels as $label)
+            $image->drawElement($label);
     }
 
     /**
@@ -151,9 +166,11 @@ class PieChart implements DrawableInterface
             $sum += $entry->getAmount();
         }
 
+
         foreach($this->data as $entry)
         {
-            $entry->setPercent($entry->getAmount() / $sum);
+            $perc = $entry->getAmount() / $sum;
+            $entry->setPercent($perc);
         }
     }
 
