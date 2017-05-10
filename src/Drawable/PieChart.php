@@ -169,11 +169,13 @@ class PieChart implements DrawableInterface
             $sum += $entry->getAmount();
         }
 
-
-        foreach($this->data as $entry)
+        if ($sum != 0)
         {
-            $perc = $entry->getAmount() / $sum;
-            $entry->setPercent($perc);
+            foreach($this->data as $entry)
+            {
+                $perc = $entry->getAmount() / $sum;
+                $entry->setPercent($perc);
+            }
         }
     }
 
